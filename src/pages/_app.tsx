@@ -1,6 +1,13 @@
-import '@/styles/globals.css'
 import type { AppProps } from 'next/app'
+import { Roboto } from 'next/font/google'
+
+import { globalStyles } from '@/styles/global'
+
+const roboto = Roboto({ subsets: ['latin'], weight:['300','400','500','700'] })
 
 export default function App({ Component, pageProps }: AppProps) {
-  return <Component {...pageProps} />
+  globalStyles()
+  return <div className={roboto.className} >
+    <Component  {...pageProps} />
+  </div> 
 }
