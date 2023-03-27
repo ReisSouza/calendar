@@ -12,11 +12,7 @@ export const registerFormSchema = z.object({
   name: z
     .string({ required_error: 'Nome  é obrigatório' })
     .nonempty({ message: 'Nome  é obrigatório' })
-    .min(3, { message: 'Nome  deve conter ao menor 3 letras' })
-    .regex(/^([a-z\\-]+)$/i, {
-      message: 'Nome  poder ter apenas letras e hifens',
-    })
-    .transform((username) => username.toLowerCase()),
+    .min(3, { message: 'Nome  deve conter ao menor 3 letras' }),
 })
 
 export type RegisterFormSchema = z.infer<typeof registerFormSchema>
