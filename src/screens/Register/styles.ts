@@ -1,4 +1,5 @@
-import { Box, styled } from '@ionext-ui/react'
+import { StitchesCSS } from '@/types/css'
+import { styled } from '@ionext-ui/react'
 
 export const Container = styled('main', {
   maxWidth: '572px',
@@ -6,13 +7,9 @@ export const Container = styled('main', {
   padding: '0 $4',
 })
 
-export const Header = styled('header', {
-  // padding: '0 $6',
-})
-
-export const Form = styled(Box, {
+export const BoxCSS: StitchesCSS = {
   display: 'flex',
   flexDirection: 'column',
   gap: '$4',
   marginTop: '$6',
-})
+}
