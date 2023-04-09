@@ -66,9 +66,9 @@ export const Register = () => {
       />
       <Box css={S.BoxCSS} as="form" onSubmit={handleSubmit(handleRegister)}>
         <TextField
-          defaultValue={query.username}
-          {...register('username')}
           label="Usuário"
+          {...register('username')}
+          defaultValue={query.username}
           hint={errors.username?.message}
         />
         <TextField
@@ -77,7 +77,7 @@ export const Register = () => {
           hint={errors.name?.message}
         />
         <Button
-          css={{ width: '100%' }}
+          fullWidth
           type="submit"
           disabled={isSubmitting}
           iconRight={<ArrowRight size={20} />}

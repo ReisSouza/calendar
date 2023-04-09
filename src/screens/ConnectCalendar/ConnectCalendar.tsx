@@ -1,16 +1,24 @@
-import { HeaderStep } from '@/features'
-import { UseToast } from '@/hooks/useToast'
-import { Button, Text, Toast } from '@ionext-ui/react'
-import { ArrowRight } from '@phosphor-icons/react'
-
 import React from 'react'
+import { useRouter } from 'next/router'
+import { Button, Text } from '@ionext-ui/react'
+import { signIn, useSession } from 'next-auth/react'
+import { ArrowRight, Check } from '@phosphor-icons/react'
+
+import { HeaderStep } from '@/features'
 
 import * as S from './styles'
 
 export const ConnectCalendar = () => {
-  const { addNewToast, listToast } = UseToast()
+  const { query } = useRouter()
 
-  console.log(addNewToast)
+  const session = useSession()
+
+  const hasAuthError = !!query.error
+  const isSignedIn = session.status === 'authenticated'
+
+  const handleConnectCalendar = async () => {
+    await signIn('google')
+  }
 
   return (
     <S.Container>
@@ -21,33 +29,33 @@ export const ConnectCalendar = () => {
         "
       />
 
-      {listToast.map((toastItem, index) => {
-        return (
-          <Toast
-            key={index}
-            title={toastItem.title}
-            description={toastItem.description}
-            variant={toastItem.variant}
-          />
-        )
-      })}
-
       <S.ConnectBox>
         <S.ConnectItem>
           <Text>Google Calendar</Text>
           <Button
+            disabled={isSignedIn}
             size="small"
             color="primary"
             variant="outlined"
-            iconRight={<ArrowRight size={20} />}
+            iconRight={
+              isSignedIn ? <Check size={20} /> : <ArrowRight size={20} />
+            }
             css={{ borderColor: '$primary-normal' }}
+            onClick={handleConnectCalendar}
           >
-            Conectar
+            {isSignedIn ? 'Conectado' : 'Conectar'}
           </Button>
         </S.ConnectItem>
+        {hasAuthError && (
+          <Text size="sm" color="danger" css={{ marginBottom: '$2' }}>
+            Falha ao se conectar ao Google, verifique se você habilitou as
+            permissões de acesso ao Google Calendar
+          </Text>
+        )}
         <Button
           type="submit"
-          css={{ width: '100%' }}
+          fullWidth
+          disabled={!isSignedIn}
           iconRight={<ArrowRight size={20} />}
         >
           Proximo passo
