@@ -20,5 +20,5 @@ export const IntervalContainer = styled('div', {
   borderColor: '$border',
   borderStyle: 'solid',
 
-  marginBottom: '$4',
+  marginBottom: '$2',
 })

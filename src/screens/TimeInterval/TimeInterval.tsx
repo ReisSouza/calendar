@@ -3,23 +3,27 @@ import React from 'react'
 import { HeaderStep } from '@/features'
 
 import * as S from './styles'
-import { Box, Button } from '@ionext-ui/react'
+import { Box, Button, Text } from '@ionext-ui/react'
 import { ArrowRight } from '@phosphor-icons/react'
 import { IntervalItem } from './components'
 import { useFieldArray, useForm } from 'react-hook-form'
 import { defaultValueTimeInterval } from './defaultValueTimeInterval'
 import { getWeedDays } from '@/utils/get-week-days'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { TimeIntervalSchema, timeIntervalSchema } from './validation'
 
 export const TimeInterval = () => {
   const {
     register,
     handleSubmit,
     control,
+    watch,
     formState: { errors, isSubmitting },
   } = useForm({
     defaultValues: {
       intervals: defaultValueTimeInterval,
     },
+    resolver: zodResolver(timeIntervalSchema),
   })
 
   const { fields } = useFieldArray({ control, name: 'intervals' })
@@ -28,7 +32,15 @@ export const TimeInterval = () => {
 
   console.log(errors)
 
-  const onSubmit = () => {}
+  const onSubmit = async (formData: TimeIntervalSchema) => {
+    const handle = async () => {
+      setTimeout(() => {
+        console.log({ formData })
+      }, 2500)
+    }
+
+    await handle()
+  }
   return (
     <S.Container>
       <HeaderStep
@@ -43,14 +55,21 @@ export const TimeInterval = () => {
           {fields.map((field, index) => {
             return (
               <IntervalItem
-                register={register}
                 index={index}
-                day={weekDays[field.weekDay]}
+                watch={watch}
                 key={field.id}
+                control={control}
+                register={register}
+                day={weekDays[field.weekDay]}
               />
             )
           })}
         </S.IntervalContainer>
+        {errors.intervals?.message && (
+          <Text css={{ marginBottom: '$6' }} color="danger">
+            {errors.intervals?.message}
+          </Text>
+        )}
         <Button
           type="submit"
           fullWidth

@@ -1,18 +1,20 @@
 import { z } from 'zod'
 
-export const registerFormSchema = z.object({
-  username: z
-    .string({ required_error: 'Nome do usuário é obrigatório' })
-    .nonempty({ message: 'Nome do usuário é obrigatório' })
-    .min(3, { message: 'Nome do usuário deve conter ao menor 3 letras' })
-    .regex(/^([a-z\\-]+)$/i, {
-      message: 'Nome do usuário poder ter apenas letras e hifens',
-    })
-    .transform((username) => username.toLowerCase()),
-  name: z
-    .string({ required_error: 'Nome  é obrigatório' })
-    .nonempty({ message: 'Nome  é obrigatório' })
-    .min(3, { message: 'Nome  deve conter ao menor 3 letras' }),
+export const timeIntervalSchema = z.object({
+  intervals: z
+    .array(
+      z.object({
+        weekDay: z.number().min(0).max(6),
+        enabled: z.boolean(),
+        startTime: z.string(),
+        endTime: z.string(),
+      }),
+    )
+    .length(7)
+    .transform((intervals) => intervals.filter((interval) => interval.enabled))
+    .refine((intervals) => intervals.length > 0, {
+      message: 'Você precisa seleciona pelo menos um dia da semana',
+    }),
 })
 
-export type RegisterFormSchema = z.infer<typeof registerFormSchema>
+export type TimeIntervalSchema = z.infer<typeof timeIntervalSchema>

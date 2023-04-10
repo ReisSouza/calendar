@@ -37,7 +37,7 @@ export const defaultValueTimeInterval = [
   },
   {
     weekDay: 6,
-    enabled: true,
+    enabled: false,
     startTime: '00:00',
     endTime: '18:00',
   },
