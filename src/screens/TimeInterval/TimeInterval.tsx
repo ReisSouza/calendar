@@ -15,6 +15,7 @@ import {
   TimeIntervalInputSchema,
   timeIntervalSchema,
 } from './validation'
+import { api } from '@/lib/axios'
 
 export const TimeInterval = () => {
   const {
@@ -37,14 +38,8 @@ export const TimeInterval = () => {
   console.log(errors)
 
   const onSubmit = async (data: any) => {
-    const formData = data as TimeIntervalOutputSchema
-    const handle = async () => {
-      setTimeout(() => {
-        console.log({ formData })
-      }, 2500)
-    }
-
-    await handle()
+    const { intervals } = data as TimeIntervalOutputSchema
+    await api.post('users/time-intervals', { intervals })
   }
   return (
     <S.Container>
