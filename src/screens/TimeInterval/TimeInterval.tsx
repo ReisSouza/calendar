@@ -10,7 +10,11 @@ import { useFieldArray, useForm } from 'react-hook-form'
 import { defaultValueTimeInterval } from './defaultValueTimeInterval'
 import { getWeedDays } from '@/utils/get-week-days'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { TimeIntervalSchema, timeIntervalSchema } from './validation'
+import {
+  TimeIntervalOutputSchema,
+  TimeIntervalInputSchema,
+  timeIntervalSchema,
+} from './validation'
 
 export const TimeInterval = () => {
   const {
@@ -19,7 +23,7 @@ export const TimeInterval = () => {
     control,
     watch,
     formState: { errors, isSubmitting },
-  } = useForm({
+  } = useForm<TimeIntervalInputSchema>({
     defaultValues: {
       intervals: defaultValueTimeInterval,
     },
@@ -32,7 +36,8 @@ export const TimeInterval = () => {
 
   console.log(errors)
 
-  const onSubmit = async (formData: TimeIntervalSchema) => {
+  const onSubmit = async (data: any) => {
+    const formData = data as TimeIntervalOutputSchema
     const handle = async () => {
       setTimeout(() => {
         console.log({ formData })

@@ -8,13 +8,13 @@ import {
   UseFormRegister,
   UseFormWatch,
 } from 'react-hook-form'
-import { TimeIntervalSchema } from '../../validation'
+import { TimeIntervalInputSchema } from '../../validation'
 
-type ControlIntervalItemProps = Control<TimeIntervalSchema, any>
+type ControlIntervalItemProps = Control<TimeIntervalInputSchema, any>
 
-type WatchIntervalItemProp = UseFormWatch<TimeIntervalSchema>
+type WatchIntervalItemProp = UseFormWatch<TimeIntervalInputSchema>
 
-type RegisteIntervalItemProps = UseFormRegister<TimeIntervalSchema>
+type RegisteIntervalItemProps = UseFormRegister<TimeIntervalInputSchema>
 type IntervalItemProps = {
   day: string
   register: RegisteIntervalItemProps
