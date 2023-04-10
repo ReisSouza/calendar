@@ -3,10 +3,32 @@ import React from 'react'
 import { HeaderStep } from '@/features'
 
 import * as S from './styles'
-import { Button, Checkbox, Text, TextField } from '@ionext-ui/react'
+import { Box, Button } from '@ionext-ui/react'
 import { ArrowRight } from '@phosphor-icons/react'
+import { IntervalItem } from './components'
+import { useFieldArray, useForm } from 'react-hook-form'
+import { defaultValueTimeInterval } from './defaultValueTimeInterval'
+import { getWeedDays } from '@/utils/get-week-days'
 
 export const TimeInterval = () => {
+  const {
+    register,
+    handleSubmit,
+    control,
+    formState: { errors, isSubmitting },
+  } = useForm({
+    defaultValues: {
+      intervals: defaultValueTimeInterval,
+    },
+  })
+
+  const { fields } = useFieldArray({ control, name: 'intervals' })
+
+  const weekDays = getWeedDays()
+
+  console.log(errors)
+
+  const onSubmit = () => {}
   return (
     <S.Container>
       <HeaderStep
@@ -16,33 +38,28 @@ export const TimeInterval = () => {
         "
       />
 
-      <S.IntervalBox as="form">
+      <Box css={S.IntervalBox} as="form" onSubmit={handleSubmit(onSubmit)}>
         <S.IntervalContainer>
-          <S.IntervalItem>
-            <S.IntervalDay>
-              <Checkbox />
-              <Text>Segunda-feira</Text>
-            </S.IntervalDay>
-            <S.IntervalInputs>
-              <TextField type="time" size="small" step={60} />
-              <TextField type="time" size="small" step={60} />
-            </S.IntervalInputs>
-          </S.IntervalItem>
-          <S.IntervalItem>
-            <S.IntervalDay>
-              <Checkbox />
-              <Text>Terça-feira</Text>
-            </S.IntervalDay>
-            <S.IntervalInputs>
-              <TextField type="time" size="small" step={60} />
-              <TextField type="time" size="small" step={60} />
-            </S.IntervalInputs>
-          </S.IntervalItem>
+          {fields.map((field, index) => {
+            return (
+              <IntervalItem
+                register={register}
+                index={index}
+                day={weekDays[field.weekDay]}
+                key={field.id}
+              />
+            )
+          })}
         </S.IntervalContainer>
-        <Button type="submit" fullWidth iconRight={<ArrowRight size={20} />}>
+        <Button
+          type="submit"
+          fullWidth
+          isLoading={isSubmitting}
+          iconRight={<ArrowRight size={20} />}
+        >
           Proximo passo
         </Button>
-      </S.IntervalBox>
+      </Box>
     </S.Container>
   )
 }
