@@ -9,7 +9,7 @@ import { HeaderStep } from '@/features'
 import * as S from './styles'
 
 export const ConnectCalendar = () => {
-  const { query } = useRouter()
+  const { query, push } = useRouter()
 
   const session = useSession()
 
@@ -56,6 +56,7 @@ export const ConnectCalendar = () => {
           type="submit"
           fullWidth
           disabled={!isSignedIn}
+          onClick={() => push('/register/time-interval')}
           iconRight={<ArrowRight size={20} />}
         >
           Proximo passo
