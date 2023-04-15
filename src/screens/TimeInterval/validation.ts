@@ -27,28 +27,6 @@ export const timeIntervalSchema = z.object({
     })
     .refine(
       (intervals) => {
-        // let weekDaysError = ''
-        // intervals.map((interval, index) => {
-        //   const day = {
-        //     enabled:
-        //       interval.endTimeInMinutes - 60 >= interval.startTimeInMinutes,
-        //     weedDay: weekDays[index],
-        //   }
-
-        //   if (!day.enabled) {
-        //     if (index === intervals.length) {
-        //       weekDaysError = weekDaysError + ` ${day.weedDay}`
-        //     } else if (weekDaysError === '') {
-        //       weekDaysError = weekDaysError + ` ${day.weedDay}`
-        //     } else {
-        //       weekDaysError = weekDaysError + `, ${day.weedDay}`
-        //     }
-        //   }
-
-        //   return day
-        // })
-        // console.log(weekDaysError)
-        // TODO SET SPECIFIC ERROR
         return intervals.every(
           (interval) =>
             interval.endTimeInMinutes - 60 >= interval.startTimeInMinutes,
