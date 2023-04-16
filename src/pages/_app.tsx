@@ -7,7 +7,7 @@ import { ToastProvider } from '@ionext-ui/react'
 
 const roboto = Roboto({
   subsets: ['latin'],
-  weight: ['300', '400', '500', '700'],
+  weight: ['300', '400', '500', '700', '900'],
 })
 
 export default function App({
