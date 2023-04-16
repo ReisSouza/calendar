@@ -3,7 +3,7 @@ import React from 'react'
 import { HeaderStep } from '@/features'
 
 import * as S from './styles'
-import { Box, Button, Text } from '@ionext-ui/react'
+import { Box, Button, Text, Toast } from '@ionext-ui/react'
 import { ArrowRight } from '@phosphor-icons/react'
 import { IntervalItem } from './components'
 import { useFieldArray, useForm } from 'react-hook-form'
@@ -16,6 +16,9 @@ import {
   timeIntervalSchema,
 } from './validation'
 import { api } from '@/lib/axios'
+import { useRouter } from 'next/router'
+import { AxiosError } from 'axios'
+import { UseToast } from '@/hooks/useToast'
 
 export const TimeInterval = () => {
   const {
@@ -31,6 +34,10 @@ export const TimeInterval = () => {
     resolver: zodResolver(timeIntervalSchema),
   })
 
+  const router = useRouter()
+
+  const { addNewToast, listToast } = UseToast()
+
   const { fields } = useFieldArray({ control, name: 'intervals' })
 
   const weekDays = getWeedDays()
@@ -39,7 +46,20 @@ export const TimeInterval = () => {
 
   const onSubmit = async (data: any) => {
     const { intervals } = data as TimeIntervalOutputSchema
-    await api.post('users/time-intervals', { intervals })
+
+    try {
+      await api.post('users/time-intervals', { intervals })
+
+      await router.push('/register/update-profile')
+    } catch (error) {
+      if (error instanceof AxiosError && error.response?.data.message) {
+        addNewToast({
+          title: 'Atualização do perfil',
+          description: error.response.data.message,
+          variant: 'danger',
+        })
+      }
+    }
   }
   return (
     <S.Container>
@@ -79,6 +99,16 @@ export const TimeInterval = () => {
           Proximo passo
         </Button>
       </Box>
+      {listToast.map((toastItem, index) => {
+        return (
+          <Toast
+            key={index}
+            title={toastItem.title}
+            description={toastItem.description}
+            variant={toastItem.variant}
+          />
+        )
+      })}
     </S.Container>
   )
 }

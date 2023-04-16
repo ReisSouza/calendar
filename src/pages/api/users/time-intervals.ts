@@ -43,20 +43,26 @@ export default async function handler(
     return res.status(401).json({ message: 'You must be logged in.' })
   }
 
-  const { intervals } = timeIntervalBodySchema.parse(req.body)
+  try {
+    const { intervals } = timeIntervalBodySchema.parse(req.body)
 
-  const data = intervals.map((interval) => ({
-    week_day: interval.weekDay,
-    time_start_in_minutes: interval.startTimeInMinutes,
-    time_end_in_minutes: interval.endTimeInMinutes,
-    user_id: session.user?.id,
-  }))
+    const data = intervals.map((interval) => ({
+      week_day: interval.weekDay,
+      time_start_in_minutes: interval.startTimeInMinutes,
+      time_end_in_minutes: interval.endTimeInMinutes,
+      user_id: session.user?.id,
+    }))
 
-  await prisma.userTimeInterval.createMany({
-    data,
-  })
+    await prisma.userTimeInterval.createMany({
+      data,
+    })
 
-  return res.status(201).json({
-    message: 'Interval create with success',
-  })
+    return res.status(201).json({
+      message: 'Interval create with success',
+    })
+  } catch (error) {
+    return res.status(400).json({
+      message: 'Failure in create interval',
+    })
+  }
 }

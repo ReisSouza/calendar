@@ -9,16 +9,16 @@ import { HeaderStep } from '@/features'
 import * as S from './styles'
 
 export const ConnectCalendar = () => {
-  const { query, push } = useRouter()
-
   const session = useSession()
+
+  const { query, push } = useRouter()
 
   const hasAuthError = !!query.error
   const isSignedIn = session.status === 'authenticated'
 
-  const handleConnectCalendar = async () => {
-    await signIn('google')
-  }
+  const handleConnectCalendar = async () => await signIn('google')
+
+  const handleNavigationToNextStep = async () => push('/register/time-interval')
 
   return (
     <S.Container>
@@ -56,7 +56,7 @@ export const ConnectCalendar = () => {
           type="submit"
           fullWidth
           disabled={!isSignedIn}
-          onClick={() => push('/register/time-interval')}
+          onClick={handleNavigationToNextStep}
           iconRight={<ArrowRight size={20} />}
         >
           Proximo passo
