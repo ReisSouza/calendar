@@ -1,21 +1,54 @@
-import { zodResolver } from '@hookform/resolvers/zod'
-import { Button, Heading, MultiStep, Text, TextField } from '@ionext-ui/react'
-import { ArrowRight } from '@phosphor-icons/react'
+import { AxiosError } from 'axios'
 import { useRouter } from 'next/router'
 import React, { useEffect } from 'react'
 import { useForm } from 'react-hook-form'
+import { ArrowRight } from '@phosphor-icons/react'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { Box, Button, TextField, Toast } from '@ionext-ui/react'
+
+import { api } from '@/lib/axios'
+import { HeaderStep } from '@/features'
+import { UseToast } from '@/hooks/useToast'
 
 import * as S from './styles'
 import { RegisterFormSchema, registerFormSchema } from './validation'
 
 export const Register = () => {
-  const { query } = useRouter()
+  const { addNewToast, listToast } = UseToast()
+
+  const { query, push } = useRouter()
+
   const {
     register,
     handleSubmit,
     setValue,
     formState: { errors, isSubmitting },
   } = useForm<RegisterFormSchema>({ resolver: zodResolver(registerFormSchema) })
+
+  const handleRegister = async (data: RegisterFormSchema) => {
+    try {
+      const res = await api.post('/users', {
+        name: data.name,
+        username: data.username,
+      })
+
+      addNewToast({
+        title: 'Criação de usuário',
+        description: res.data.message,
+        variant: 'success',
+      })
+
+      await push('/register/connect-calendar')
+    } catch (error) {
+      if (error instanceof AxiosError && error.response?.data.message) {
+        addNewToast({
+          title: 'Criação de usuário',
+          description: error.response.data.message,
+          variant: 'danger',
+        })
+      }
+    }
+  }
 
   useEffect(() => {
     if (query.username) {
@@ -25,19 +58,17 @@ export const Register = () => {
 
   return (
     <S.Container>
-      <S.Header>
-        <Heading as={'strong'}>Bem vindo ao Odonto IO</Heading>
-        <Text css={{ margin: '$2 0 $4' }}>
-          Precisamos de algumas informações para criar seu perfil! Ah, você pode
-          editar essas informações depois
-        </Text>
-        <MultiStep size={4} currentStep={1} />
-      </S.Header>
-      <S.Form as="form" onSubmit={handleSubmit(() => {})}>
+      <HeaderStep
+        title="Bem vindo ao Odonto IO"
+        description="Precisamos de algumas informações para criar seu perfil! Ah, você pode
+          editar essas informações depois"
+        currentStep={1}
+      />
+      <Box css={S.BoxCSS} as="form" onSubmit={handleSubmit(handleRegister)}>
         <TextField
-          defaultValue={query.username}
-          {...register('username')}
           label="Usuário"
+          {...register('username')}
+          defaultValue={query.username}
           hint={errors.username?.message}
         />
         <TextField
@@ -45,10 +76,25 @@ export const Register = () => {
           label="Nome completo"
           hint={errors.name?.message}
         />
-        <Button type="submit" iconRight={<ArrowRight size={20} />}>
+        <Button
+          fullWidth
+          type="submit"
+          disabled={isSubmitting}
+          iconRight={<ArrowRight size={20} />}
+        >
           Proximo passo
         </Button>
-      </S.Form>
+      </Box>
+      {listToast.map((toastItem, index) => {
+        return (
+          <Toast
+            key={index}
+            title={toastItem.title}
+            description={toastItem.description}
+            variant={toastItem.variant}
+          />
+        )
+      })}
     </S.Container>
   )
 }

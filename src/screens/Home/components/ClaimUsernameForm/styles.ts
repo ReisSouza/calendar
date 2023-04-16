@@ -6,6 +6,4 @@ export const BoxCSS: StitchesCSS = {
   gap: '$2',
   marginTop: '$4',
   padding: '$4',
-
-  borderRadius: '$1',
 }

@@ -29,6 +29,7 @@ export const ClaimUsernameForm = () => {
         onSubmit={handleSubmit(handleClaimUsername)}
       >
         <TextField
+          type="text"
           size="small"
           placeholder="usuário"
           {...register('username')}
@@ -45,10 +46,8 @@ export const ClaimUsernameForm = () => {
       </Box>
       <Text
         size="sm"
+        color={errors.username?.message ? 'danger' : 'text'}
         css={{
-          color: errors.username?.message
-            ? '$feedback-error-normal !important'
-            : '$text',
           marginTop: '$2',
         }}
       >
