@@ -21,24 +21,30 @@ export default async function handler(
 
   if (userAlreadyExists) {
     return res.status(400).json({
-      message: `Usuário com o username : ${userAlreadyExists.username} já existe, caso tenha esquecido a senha tente recuperar o usuário `,
+      message: `Already Exists user with username ${username}`,
     })
   }
 
-  const user = await prisma.user.create({
-    data: {
-      name,
-      username,
-    },
-  })
+  try {
+    const user = await prisma.user.create({
+      data: {
+        name,
+        username,
+      },
+    })
 
-  setCookie({ res }, '@odonto-io:userId', user.id, {
-    maxAge: 60 * 60 * 24 * 7, // 7 Days
-    path: '/',
-  })
+    setCookie({ res }, '@odonto-io:userId', user.id, {
+      maxAge: 60 * 60 * 24 * 7, // 7 Days
+      path: '/',
+    })
 
-  return res.status(201).json({
-    data: user,
-    message: `Novo usuário com o Username: ${user.username}, foi criado com sucesso!`,
-  })
+    return res.status(201).json({
+      data: user,
+      message: `Success in created user: ${user.username}`,
+    })
+  } catch (error) {
+    return res.status(400).json({
+      message: 'Failure in create user',
+    })
+  }
 }

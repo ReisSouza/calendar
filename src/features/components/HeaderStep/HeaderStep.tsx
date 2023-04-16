@@ -16,8 +16,12 @@ export const HeaderStep: React.FC<HeaderStepProps> = ({
 }: HeaderStepProps) => {
   return (
     <S.Header>
-      <Heading as={'strong'}>{title}</Heading>
-      <Text css={S.TextCSS}>{description}</Text>
+      <Heading color="secondary" as={'strong'}>
+        {title}
+      </Heading>
+      <Text color="secondary" css={S.TextCSS}>
+        {description}
+      </Text>
       <MultiStep size={4} currentStep={currentStep} />
     </S.Header>
   )

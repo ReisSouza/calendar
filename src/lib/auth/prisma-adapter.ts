@@ -1,18 +1,18 @@
+import { NextApiRequest, NextApiResponse, NextPageContext } from 'next'
 import { Adapter } from 'next-auth/adapters'
-import { prisma } from '../prisma'
-import { NextApiRequest, NextApiResponse } from 'next'
 import { parseCookies, destroyCookie } from 'nookies'
+import { prisma } from '../prisma'
 
 export function PrismaAdapter(
-  req: NextApiRequest,
-  res: NextApiResponse,
+  req: NextApiRequest | NextPageContext['req'],
+  res: NextApiResponse | NextPageContext['res'],
 ): Adapter {
   return {
     async createUser(user) {
       const { '@odonto-io:userId': userIdOnCookies } = parseCookies({ req })
 
       if (!userIdOnCookies) {
-        throw new Error('User id not found in cookies')
+        throw new Error('User ID not found on cookies.')
       }
 
       const prismaUser = await prisma.user.update({
@@ -80,7 +80,6 @@ export function PrismaAdapter(
         avatar_url: user.avatar_url!,
       }
     },
-
     async getUserByAccount({ providerAccountId, provider }) {
       const account = await prisma.account.findUnique({
         where: {
@@ -179,6 +178,7 @@ export function PrismaAdapter(
       if (!prismaSession) {
         return null
       }
+
       const { user, ...session } = prismaSession
 
       return {
