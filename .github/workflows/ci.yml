@@ -2,7 +2,7 @@ name: CI2
  
 on: push
   # on: push
-  # pull_request:
+  pull_request:
     types: [opened, synchronize]
  
 jobs:
