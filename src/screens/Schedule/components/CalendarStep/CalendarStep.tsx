@@ -9,7 +9,7 @@ export const CalendarStep: React.FC<CalendarStepProps> = ({
   ...rest
 }: CalendarStepProps) => {
   return (
-    <S.CalendarStepContainer>
+    <S.CalendarStepContainer variant={'primary'}>
       <Calendar />
     </S.CalendarStepContainer>
   )

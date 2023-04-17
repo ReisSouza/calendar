@@ -13,7 +13,7 @@ export const Tbody: React.FC<TbodyProps> = ({ ...rest }: TbodyProps) => {
         <td></td>
         <td></td>
         <td>
-          <S.CalendarDay>1</S.CalendarDay>
+          <S.CalendarDay disabled>1</S.CalendarDay>
         </td>
         <td>
           <S.CalendarDay>2</S.CalendarDay>

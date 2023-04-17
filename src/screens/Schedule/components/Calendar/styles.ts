@@ -1,5 +1,15 @@
 import { styled } from '@ionext-ui/react'
 
-export const CalendarContainer = styled('section', {})
+export const CalendarContainer = styled('section', {
+  display: 'flex',
+  flexDirection: 'column',
+  gap: '$6',
+  padding: '$6',
+})
 
-export const CalendarBody = styled('table', {})
+export const CalendarBody = styled('table', {
+  width: '100%',
+  fontFamily: '$default',
+  borderSpacing: '0.25rem',
+  tableLayout: 'fixed',
+})
