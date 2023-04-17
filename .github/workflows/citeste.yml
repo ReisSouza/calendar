@@ -1,8 +1,7 @@
 name: CI
  
 on:
-  push:
-    branches: ["coverage/**"]
+  on: push
   pull_request:
     types: [opened, synchronize]
  
