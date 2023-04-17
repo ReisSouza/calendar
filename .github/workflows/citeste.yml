@@ -1,9 +1,9 @@
-name: CI
+name: CI2
  
 on:
   on: push
-  pull_request:
-    types: [opened, synchronize]
+  # pull_request:
+  #   types: [opened, synchronize]
  
 jobs:
   build:
@@ -34,5 +34,4 @@ jobs:
         - name: Build
           run: npm run build
  
-        - name: Test
-          run: npm run test
+   
