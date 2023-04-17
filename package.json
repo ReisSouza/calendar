@@ -4,10 +4,11 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
+    "build": "next build ",
     "start": "next start",
     "lint": "next lint",
     "prisma-migrates": "npx prisma migrate dev",
+    "tsc": "tsc -p tsconfig.json",
     "prisma-dev": "npx prisma studio",
     "clean": "rm -rf .turbo && rm -rf node_modules && rm -rf dist",
     "clean-cache": "rm -rf ./node_modules/.cache/turbo"
@@ -36,5 +37,9 @@
     "@rocketseat/eslint-config": "^1.2.0",
     "@types/cookie": "^0.5.1",
     "prisma": "^4.12.0"
+  },
+  "engines": {
+    "node": ">=18.16.0",
+    "npm": ">=9.5.1"
   }
 }
