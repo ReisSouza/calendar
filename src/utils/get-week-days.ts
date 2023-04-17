@@ -1,8 +1,8 @@
 export type GetWeedDaysParams = {
-  short?: boolean
+  short?: boolean | undefined
 }
 
-export const getWeedDays = ({ short = false }: GetWeedDaysParams) => {
+export const getWeedDays = ({ short = false }: GetWeedDaysParams = {}) => {
   const formatter = new Intl.DateTimeFormat('pt-BR', { weekday: 'long' })
 
   return Array.from(Array(7).keys())

@@ -1,0 +1,20 @@
+{
+  "$schema": "https://turbo.build/schema.json",
+  "pipeline": {
+    "build": {
+      "outputs": [".next/**", "!.next/cache/**"]
+    },
+    "lint": {},
+    "clean": {},
+    "clean-cache": {},
+    "dev": {
+      "cache": false,
+      "persistent": true
+    },
+    "prisma-migrates": {},
+    "prisma-dev": {
+      "cache": false,
+      "persistent": true
+    }
+  }
+}

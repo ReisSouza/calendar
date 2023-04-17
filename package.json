@@ -8,7 +8,9 @@
     "start": "next start",
     "lint": "next lint",
     "prisma-migrates": "npx prisma migrate dev",
-    "prisma-dev": "npx prisma studio"
+    "prisma-dev": "npx prisma studio",
+    "clean": "rm -rf .turbo && rm -rf node_modules && rm -rf dist",
+    "clean-cache": "rm -rf ./node_modules/.cache/turbo"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.0.0",
