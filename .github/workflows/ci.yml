@@ -30,12 +30,14 @@ jobs:
           run: npm install
 
         - name: Run Linter
-          run: yarn lint .
+          run: npm lint .
+
+        - name: Typescript
+          run: npm run tsc
  
         - name: Build
           run: npm run build
         
-        - name: Typescript
-          run: npm run tsc
+        
  
    
