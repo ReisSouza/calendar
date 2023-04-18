@@ -5,6 +5,7 @@ export const CalendarContainer = styled('section', {
   flexDirection: 'column',
   gap: '$6',
   padding: '$6',
+  position: 'relative',
 })
 
 export const CalendarBody = styled('table', {

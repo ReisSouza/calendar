@@ -10,7 +10,7 @@
     "prisma-migrates": "npx prisma migrate dev",
     "tsc": "tsc -p tsconfig.json",
     "prisma-dev": "npx prisma studio",
-    "clean": "rm -rf .turbo && rm -rf node_modules && rm -rf dist",
+    "clean": "rm -rf node_modules && rm -rf dist",
     "clean-cache": "rm -rf ./node_modules/.cache/turbo"
   },
   "dependencies": {

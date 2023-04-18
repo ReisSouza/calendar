@@ -26,6 +26,8 @@ export const CalendarDay = styled('button', {
 
   fontWeight: '$bold',
 
+  transition: 'all 250ms ease-in-out',
+
   '&:focus': {
     boxShadow: '0 0 0 2px $colors$secondary-light-active',
   },
