@@ -1,15 +1,22 @@
 import React from 'react'
+import dayjs from 'dayjs'
+import { Text } from '@ionext-ui/react'
 
 import * as S from './styles'
-import { Text } from '@ionext-ui/react'
-import dayjs from 'dayjs'
+
+export type Availability = {
+  possibleTimes: number[]
+  availableTimes: number[]
+}
 
 export type TimePickerProps = {
   selectedDate: Date | null
+  availability: Availability | null
 }
 
 export const TimePicker: React.FC<TimePickerProps> = ({
   selectedDate,
+  availability,
 }: TimePickerProps) => {
   const weekDay = selectedDate ? dayjs(selectedDate).format('dddd') : null
   const describedDate = selectedDate
@@ -28,8 +35,15 @@ export const TimePicker: React.FC<TimePickerProps> = ({
         </time>
       </Text>
       <S.TimePickerList>
-        {Array.from(Array(24)).map((hour, index) => {
-          return <S.TimePickerItems key={index}>{index}</S.TimePickerItems>
+        {availability?.possibleTimes.map((hour, index) => {
+          return (
+            <S.TimePickerItems
+              key={index}
+              disabled={!availability.availableTimes.includes(hour)}
+            >
+              {String(hour).padStart(2, '0')}:00h
+            </S.TimePickerItems>
+          )
         })}
       </S.TimePickerList>
     </S.TimePickerContainer>
