@@ -10,6 +10,6 @@ export const globalStyles = globalCss({
     backgroundColor: '$background',
     color: '$text',
     '-webkit-font-smoothing': 'antialiased',
-    fontFamily: 'sans-serif !important',
+    fontFamily: 'Roboto',
   },
 })

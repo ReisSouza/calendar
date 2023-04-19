@@ -1,23 +1,23 @@
 import React, { useState } from 'react'
 
 import * as S from './styles'
-import { Calendar } from '../Calendar/Calendar'
 import { TimePicker } from '../TimePicker/TimePicker'
+import { Calendar } from '@/components'
 
 export type CalendarStepProps = {}
 
 export const CalendarStep: React.FC<CalendarStepProps> = ({
   ...rest
 }: CalendarStepProps) => {
-  const [isDateSelected] = useState(true)
+  const [selectedDate, setSelectDate] = useState<Date | null>(null)
 
   return (
     <S.CalendarStepContainer
       variant={'primary'}
-      isTimePickerOpen={isDateSelected}
+      isTimePickerOpen={!!selectedDate}
     >
-      <Calendar />
-      {isDateSelected && <TimePicker />}
+      <Calendar selectedDate={selectedDate} onDateSelected={setSelectDate} />
+      {selectedDate && <TimePicker />}
     </S.CalendarStepContainer>
   )
 }

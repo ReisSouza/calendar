@@ -1,11 +1,10 @@
-name: CI-TESTE
+name: CI
  
 on: push
  
 jobs:
   build:
-      name: Build and Test
-      timeout-minutes: 15
+      name: Build and Lint
       runs-on: ubuntu-latest
       env:
        TURBO_TOKEN: ${{ secrets.VERCEL_TOKEN }}

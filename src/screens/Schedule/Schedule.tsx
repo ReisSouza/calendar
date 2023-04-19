@@ -11,7 +11,6 @@ export type ScheduleProps = {
 }
 
 export const Schedule: React.FC<ScheduleProps> = ({ user }: ScheduleProps) => {
-  console.log(user)
   return (
     <S.ScheduleContainer>
       <S.ScheduleHeader>

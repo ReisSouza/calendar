@@ -9,6 +9,7 @@ export const HeaderContainer = styled('header', {
 
 export const CalendarTitle = styled(Text, {
   fontWeight: 'bold',
+  textTransform: 'capitalize',
 
   span: {
     fontWeight: 'bolder',
