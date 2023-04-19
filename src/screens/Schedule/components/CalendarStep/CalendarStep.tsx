@@ -17,7 +17,7 @@ export const CalendarStep: React.FC<CalendarStepProps> = ({
       isTimePickerOpen={!!selectedDate}
     >
       <Calendar selectedDate={selectedDate} onDateSelected={setSelectDate} />
-      {selectedDate && <TimePicker />}
+      {!!selectedDate && <TimePicker selectedDate={selectedDate} />}
     </S.CalendarStepContainer>
   )
 }
