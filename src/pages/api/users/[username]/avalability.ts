@@ -38,7 +38,7 @@ export default async function handler(
 
   const userAvailability = await prisma.userTimeInterval.findFirst({
     where: {
-      id: user.id,
+      user_id: user.id,
       week_day: referenceDate.get('day'),
     },
   })
